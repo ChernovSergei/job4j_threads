@@ -1,6 +1,7 @@
 # job4j_threads
 
 Этот проект предназначен для изучения основ многопоточности в Java.
+
 master changes
 hotifx_2 changes
 
