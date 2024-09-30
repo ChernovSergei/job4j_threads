@@ -4,6 +4,8 @@
 master changes
 hotifx_2 changes
 
+Branches were edited in the course
+
 В проекте рассмотрено следующее:
 1. Threads
 2. Общие ресурсы
