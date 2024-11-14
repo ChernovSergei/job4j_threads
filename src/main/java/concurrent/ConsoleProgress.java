@@ -1,11 +1,11 @@
 package concurrent;
 
 public class ConsoleProgress implements Runnable {
-    char[] process = new char[] {'-', '\\', '|', '/'};
-    int index = 0;
 
     @Override
     public void run() {
+        char[] process = new char[] {'-', '\\', '|', '/'};
+        int index = 0;
         while (!Thread.currentThread().isInterrupted()) {
             try {
                 System.out.print("\rLoad ... " + process[index]);
