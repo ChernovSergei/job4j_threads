@@ -1,7 +1,6 @@
 package concurrent;
 
 public class ConsoleProgress implements Runnable {
-
     @Override
     public void run() {
         char[] process = new char[] {'-', '\\', '|', '/'};
