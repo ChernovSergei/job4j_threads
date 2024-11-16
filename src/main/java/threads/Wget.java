@@ -24,16 +24,15 @@ public class Wget implements Runnable {
             var dataBuffer = new byte[512];
             int bytesRead;
             int totalBytes = 0;
-            long totalTime = 0;
-            int oneSecond = 1000000000;
-            var currentTimeMills = System.nanoTime();
+            long totalTime;
+            long startTime = System.currentTimeMillis();
             while ((bytesRead = input.read(dataBuffer, 0, dataBuffer.length)) != -1) {
                 output.write(dataBuffer, 0, dataBuffer.length);
-                totalTime = totalTime + System.nanoTime() - currentTimeMills;
                 totalBytes = totalBytes + bytesRead;
             }
-            if (totalBytes >= speed && totalTime <= oneSecond) {
-                Thread.sleep((oneSecond - totalTime) / 1000000);
+            totalTime = System.currentTimeMillis() - startTime;
+            if (totalBytes >= speed && totalTime <= 1000) {
+                Thread.sleep(1000 - totalTime);
             }
         } catch (IOException e) {
             e.printStackTrace();
