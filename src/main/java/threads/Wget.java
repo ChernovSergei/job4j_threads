@@ -32,9 +32,9 @@ public class Wget implements Runnable {
                     long totalTime = System.currentTimeMillis() - startTime;
                     if (totalTime < 1000) {
                         Thread.sleep(1000 - totalTime);
-                        totalBytes = 0;
-                        startTime = System.currentTimeMillis();
                     }
+                    totalBytes = 0;
+                    startTime = System.currentTimeMillis();
                 }
 
             }
