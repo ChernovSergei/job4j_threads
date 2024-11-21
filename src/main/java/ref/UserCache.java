@@ -1,6 +1,5 @@
 package ref;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -18,8 +17,6 @@ public class UserCache {
     }
 
     public List<User> findAll() {
-        List<User> result = new LinkedList<>();
-        users.values().forEach(u -> User.of(u.getName()));
-        return result;
+        return users.values().stream().map(u -> User.of(u.getName())).toList();
     }
 }
