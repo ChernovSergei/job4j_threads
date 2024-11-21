@@ -19,7 +19,7 @@ public class UserCache {
 
     public List<User> findAll() {
         List<User> result = new LinkedList<>();
-        users.keySet().forEach(i -> result.add(findById(i)));
+        users.values().forEach(u -> User.of(u.getName()));
         return result;
     }
 }
