@@ -1,5 +1,8 @@
 package ref;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class User {
     private int id;
     private String name;
@@ -8,6 +11,12 @@ public class User {
         User user = new User();
         user.name = name;
         return user;
+    }
+
+    public static List<User> ofList(List<User> cashUsers) {
+        List<User> users = new LinkedList<>();
+        cashUsers.forEach(u -> users.add(of(u.getName())));
+        return users;
     }
 
     public void setName(String name) {
