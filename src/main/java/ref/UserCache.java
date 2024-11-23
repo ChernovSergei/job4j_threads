@@ -3,6 +3,7 @@ package ref;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class UserCache {
     ConcurrentHashMap<Integer, User> users = new ConcurrentHashMap<>();
@@ -17,6 +18,6 @@ public class UserCache {
     }
 
     public List<User> findAll() {
-        return User.ofList(users.values().stream().toList());
+        return users.values().stream().map(u -> User.of(u.getName())).collect(Collectors.toList());
     }
 }
