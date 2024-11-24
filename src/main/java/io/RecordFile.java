@@ -11,10 +11,13 @@ public class RecordFile {
         this.content = content;
     }
 
-    public synchronized void saveContent() throws IOException {
-        OutputStream o = new BufferedOutputStream(new FileOutputStream(file));
-        for (int i = 0; i < content.length(); i++) {
-            o.write(content.charAt(i));
+    public synchronized void saveContent() {
+        try (OutputStream o = new BufferedOutputStream(new FileOutputStream(file))) {
+            for (int i = 0; i < content.length(); i++) {
+                o.write(content.charAt(i));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
