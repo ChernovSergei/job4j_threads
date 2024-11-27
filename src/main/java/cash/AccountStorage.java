@@ -12,23 +12,15 @@ public class AccountStorage {
     private final HashMap<Integer, Account> accounts = new HashMap<>();
 
     public synchronized boolean add(Account account) {
-        if (getById(account.id()).isEmpty()) {
-            return accounts.put(account.id(), account) != null;
-        }
-        return false;
+        return accounts.putIfAbsent(account.id(), account) != null;
     }
 
     public synchronized boolean update(Account account) {
-        if (getById(account.id()).isPresent()) {
-            return accounts.replace(account.id(), accounts.get(account.id()), account);
-        }
-        return false;
+        return accounts.replace(account.id(), accounts.get(account.id()), account);
     }
 
     public synchronized void delete(int id) {
-        if (getById(id).isPresent()) {
-            accounts.remove(id);
-        }
+        accounts.remove(id);
     }
 
     public synchronized Optional<Account> getById(int id) {
@@ -36,14 +28,16 @@ public class AccountStorage {
     }
 
     public synchronized boolean transfer(int fromId, int toId, int amount) {
-        if (getById(fromId).isEmpty() || getById(toId).isEmpty()) {
+        Optional<Account> from = getById(fromId);
+        Optional<Account> to = getById(toId);
+        if (from.isEmpty() || to.isEmpty()) {
             return false;
         }
-        if (accounts.get(fromId).amount() - amount < 0) {
+        if (from.get().amount() - amount < 0) {
             return false;
         }
-        boolean from = update(new Account(fromId, accounts.get(fromId).amount() - amount));
-        boolean to = update(new Account(toId, accounts.get(toId).amount() + amount));
-        return from && to;
+        boolean left = update(new Account(fromId, from.get().amount() - amount));
+        boolean become = update(new Account(toId, from.get().amount() + amount));
+        return left && become;
     }
 }

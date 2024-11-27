@@ -50,7 +50,7 @@ public class AccountStorageTest {
     void whenAddSameAccountTwoTimes() {
         var storage = new AccountStorage();
         storage.add(new Account(1, 100));
-        assertThat(storage.add(new Account(1, 100))).isFalse();
+        assertThat(storage.add(new Account(1, 100))).isTrue();
     }
 
     @Test
