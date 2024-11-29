@@ -28,7 +28,7 @@ public class SingleLockList<T> implements Iterable<T> {
     }
 
     public synchronized List<T> copy(List<T> origin) {
-        List<T> localList = origin instanceof ArrayList ? new ArrayList<T>() : new LinkedList<T>();
+        List<T> localList = new ArrayList<T>();
         localList.addAll(origin);
         return localList;
     }
