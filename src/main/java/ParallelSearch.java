@@ -1,11 +1,10 @@
 public class ParallelSearch {
 
     public static void main(String[] args) {
-        final int size = 3;
-        SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<Integer>(size);
+        SimpleBlockingQueue<Integer> queue = new SimpleBlockingQueue<Integer>(3);
         final Thread consumer = new Thread(
                 () -> {
-                    for (int index = 0; index != size; index++) {
+                    while (!Thread.currentThread().isInterrupted()) {
                         try {
                             System.out.println(queue.poll());
                         } catch (InterruptedException e) {
@@ -16,9 +15,9 @@ public class ParallelSearch {
                 }
         );
         consumer.start();
-        final Thread producer = new Thread(
+        new Thread(
                 () -> {
-                    for (int index = 0; index != size; index++) {
+                    for (int index = 0; index != 3; index++) {
                         try {
                             queue.offer(index);
                             Thread.sleep(500);
@@ -26,8 +25,8 @@ public class ParallelSearch {
                             e.printStackTrace();
                         }
                     }
+                    consumer.interrupt();
                 }
-        );
-        producer.start();
+        ).start();
     }
 }
