@@ -1,4 +1,6 @@
 import net.jcip.annotations.ThreadSafe;
+
+import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @ThreadSafe
@@ -10,7 +12,12 @@ public class CASCount {
     }
 
     public void increment() {
-        count.incrementAndGet();
+        int incrementedValue;
+        int initialValue;
+        do {
+            initialValue = count.get();
+            incrementedValue = initialValue + 1;
+        } while (!count.compareAndSet(initialValue, incrementedValue));
     }
 
     public int get() {
