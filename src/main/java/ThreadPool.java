@@ -3,13 +3,21 @@ import java.util.List;
 
 public class ThreadPool {
     private final List<Thread> threads = new LinkedList<>();
-    private final SimpleBlockingQueue<Runnable> tasks = new SimpleBlockingQueue<>(40);
-    int size;
+    private final SimpleBlockingQueue<Runnable> blockingQueue;
+    private int threadsNumber = Runtime.getRuntime().availableProcessors();
 
-    public ThreadPool() throws InterruptedException {
-        size = Runtime.getRuntime().availableProcessors();
-        for (int i = 0; i < size; i++) {
-            Thread thread = new Thread(tasks.poll());
+    public ThreadPool(int queueSize) throws InterruptedException {
+        blockingQueue = new SimpleBlockingQueue<>(queueSize);
+        for (int i = 0; i < threadsNumber; i++) {
+            Thread thread = new Thread(() -> {
+                try {
+                    for (int j = 0; j < queueSize; j++) {
+                        blockingQueue.poll();
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            });
             threads.add(thread);
         }
         for (Thread thread : threads) {
@@ -18,16 +26,29 @@ public class ThreadPool {
     }
 
     public void work(Runnable job) throws InterruptedException {
-        if (Thread.currentThread().isInterrupted()) {
-            throw new IllegalStateException("ThreadPool is topped");
-        }
-        this.tasks.offer(job);
+        this.blockingQueue.offer(job);
     }
 
     public void shutdown() throws InterruptedException {
         for (Thread thread : threads) {
             thread.interrupt();
-            thread.join();
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            int queueSize = 100;
+            ThreadPool pool = new ThreadPool(queueSize);
+            for (int i = 0; i < queueSize; i++) {
+                int taskNumber = i;
+                pool.work(() ->
+                            System.out.println("offer " + taskNumber)
+                        );
+            }
+            pool.shutdown();
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 }
