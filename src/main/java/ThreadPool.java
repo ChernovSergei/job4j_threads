@@ -11,8 +11,8 @@ public class ThreadPool {
         for (int i = 0; i < threadsNumber; i++) {
             Thread thread = new Thread(() -> {
                 try {
-                    for (int j = 0; j < queueSize; j++) {
-                        blockingQueue.poll();
+                    while (!Thread.currentThread().isInterrupted()) {
+                        blockingQueue.poll().run();
                     }
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
@@ -45,6 +45,7 @@ public class ThreadPool {
                             System.out.println("offer " + taskNumber)
                         );
             }
+            Thread.sleep(2000);
             pool.shutdown();
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
