@@ -15,6 +15,7 @@ public class ThreadPool {
                         blockingQueue.poll().run();
                     }
                 } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
                     throw new RuntimeException(e);
                 }
             });
