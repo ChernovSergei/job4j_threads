@@ -6,7 +6,7 @@ import java.util.List;
 public class ShareNotSafe {
     public static void main(String[] args) throws InterruptedException {
         UserCache cache = new UserCache();
-        User user = User.of("main");
+        User user = User.of("main", "email");
         cache.addUser(user);
 
         Thread first = new Thread(

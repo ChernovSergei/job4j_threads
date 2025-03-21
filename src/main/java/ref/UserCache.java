@@ -10,14 +10,14 @@ public class UserCache {
     private final AtomicInteger id = new AtomicInteger();
 
     public void addUser(User user) {
-        users.put(id.incrementAndGet(), User.of(user.getName()));
+        users.put(id.incrementAndGet(), User.of(user.getName(), user.getEmail()));
     }
 
     public User findById(int id) {
-        return User.of(users.get(id).getName());
+        return User.of(users.get(id).getName(), users.get(id).getEmail());
     }
 
     public List<User> findAll() {
-        return users.values().stream().map(u -> User.of(u.getName())).collect(Collectors.toList());
+        return users.values().stream().map(u -> User.of(u.getName(), u.getEmail())).collect(Collectors.toList());
     }
 }
