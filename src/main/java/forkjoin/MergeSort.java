@@ -1,4 +1,4 @@
-package forkJoinPoolLecture;
+package forkjoin;
 
 public class MergeSort {
 
@@ -8,7 +8,7 @@ public class MergeSort {
 
     private static int[] sort(int[] array, int from, int to) {
         if (from == to) {
-            return new int[] { array[from] };
+            return new int[] {array[from] };
         }
 
         int middle = (from + to) / 2;

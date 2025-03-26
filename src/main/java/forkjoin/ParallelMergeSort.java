@@ -1,4 +1,4 @@
-package forkJoinPoolLecture;
+package forkjoin;
 
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveTask;
@@ -9,7 +9,7 @@ public class ParallelMergeSort extends RecursiveTask<int[]> {
     private final int from;
     private final int to;
 
-    public ParallelMergeSort (int[] array, int from, int to) {
+    public ParallelMergeSort(int[] array, int from, int to) {
         this.array = array;
         this.from = from;
         this.to = to;
