@@ -60,6 +60,12 @@ class ParallelSearchTest {
     @Test
     void whenElementIsAbsent() {
         Integer actual = ParallelSearch.getIndex(numbers1, 14);
-        assertThat(actual).isNull();
+        assertThat(actual).isEqualTo(-1);
+    }
+
+    @Test
+    void whenWantedElementIsTheLastelement() {
+        Integer actual = ParallelSearch.getIndex(numbers1, 13);
+        assertThat(actual).isEqualTo(12);
     }
 }
