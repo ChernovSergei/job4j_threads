@@ -17,8 +17,8 @@ public class ThreadPool {
         }
     }
 
-    public void work (Runnable job) throws InterruptedException {
-        if(Thread.currentThread().isInterrupted()) {
+    public void work(Runnable job) throws InterruptedException {
+        if (Thread.currentThread().isInterrupted()) {
             throw new IllegalStateException("ThreadPool is topped");
         }
         this.tasks.offer(job);
