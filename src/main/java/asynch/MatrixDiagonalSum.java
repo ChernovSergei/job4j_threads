@@ -63,7 +63,7 @@ public class MatrixDiagonalSum {
             System.out.println();
         }
         sums = asyncSum(matrix);
-        for(int r = 0; r < sums.length; r++) {
+        for (int r = 0; r < sums.length; r++) {
             System.out.println(sums[r]);
         }
     }
