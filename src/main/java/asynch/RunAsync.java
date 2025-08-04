@@ -14,23 +14,25 @@ public class RunAsync {
         }
     }
 
-    private static CompletableFuture<Void> throwTrashAway() {
+    private static CompletableFuture<Void> throwTrashAway(String name, String action, int sleep) {
         return CompletableFuture.runAsync(
                 () -> {
-                    System.out.println("Child: Parents, I went to throw the trash away");
+                    System.out.println(name + ": Parents, I went to " + action);
                     try {
-                        TimeUnit.SECONDS.sleep(5);
+                        TimeUnit.SECONDS.sleep(sleep);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    System.out.println("Child: Parents, I came back!");
+                    System.out.println(name + ": Parents, I've completed!");
                 }
 
         );
     }
 
     public static void runAsyncExample() throws Exception {
-        CompletableFuture<Void> thowATrash = throwTrashAway();
+        CompletableFuture<Void> thowATrash = throwTrashAway("Child", "throw the trash.", 5);
+        CompletableFuture<Void> washDish = throwTrashAway("Brother", "wash the dishes", 2);
+        CompletableFuture<Void> watchTV = throwTrashAway("GrandFather", "watch TV.", 7);
         work();
     }
 

@@ -33,6 +33,7 @@ public class AllOf {
                 washHands("Mather", 2), washHands("Father", 3),
                 washHands("Sister", 5), washHands("Brother", 6)
         );
+        all.join();
         work();
     }
 

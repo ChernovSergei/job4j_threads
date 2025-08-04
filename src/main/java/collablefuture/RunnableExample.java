@@ -28,10 +28,14 @@ public class RunnableExample {
         Thread third = new Thread(runnableTask1);
         FutureTask<String> future = new FutureTask<>(callableTask1);
         Thread fourth = new Thread(future);
+        Thread fifth = new Thread(
+                () -> System.out.println("Thread using lambda")
+        );
         second.start();
         first.start();
         third.start();
         fourth.start();
+        fifth.start();
         try {
             System.out.println(future.get());
         } catch (ExecutionException | InterruptedException e) {

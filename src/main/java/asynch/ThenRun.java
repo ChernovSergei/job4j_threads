@@ -3,7 +3,7 @@ package asynch;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
-public class TheRun {
+public class ThenRun {
     private static void work() throws InterruptedException {
         int count = 0;
         while (count < 10) {
